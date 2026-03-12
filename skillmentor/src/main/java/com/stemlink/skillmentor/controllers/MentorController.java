@@ -4,10 +4,19 @@ import com.stemlink.skillmentor.dto.MentorDTO;
 import com.stemlink.skillmentor.entities.Mentor;
 import com.stemlink.skillmentor.services.MentorService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
+
+@RestController
+@RequestMapping(path = "/api/v1/mentors")
+@RequiredArgsConstructor
+@Validated
 
 public class MentorController extends AbstractController{
 
@@ -15,8 +24,8 @@ public class MentorController extends AbstractController{
     private final ModelMapper modelMapper;
 
     @GetMapping
-    public List<Mentor> getAllMentors() {
-        return mentorService.getAllMentors();
+    public Page<Mentor> getAllMentors(Pageable pageable) {
+        return mentorService.getAllMentors(pageable);
     }
 
     @GetMapping("{id}")
